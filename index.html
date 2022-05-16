@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <title>API Cards</title>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <link href="css/style.css" rel="stylesheet">
+ <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css' />
+ <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+ <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+ <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+</head>
+
+<body class="bg-color">
+
+ <nav class="navbar has-bg-light-cian">
+  <!-- Brand Image -->
+  <div class="nav-brand">
+   <a class="" href="">
+   </a>
+  </div>
+
+  <!-- Links -->
+  <div class="navbar-items-left ">
+   <!-- los que se mantienen al lado izquierdo -->
+   <a class="navbar-item has-bg-info is-white" href="index.html">
+    Home
+   </a>
+   <div class="input-container">
+    <label for="search-bar">Search Products</label>
+    <input class="input" type="text" id="search-bar">
+   </div>
+   <button class="btn has-bg-light-cian text-4 btn-search"><i class="fa-solid fa-magnifying-glass"></i></button>
+  </div>
+
+
+
+  <div class="navbar-items-right">
+   <!-- los que se mantienen del lado derecho -->
+   <button class="navbar-item btn text-3 is-white" onclick="renderCart()">
+    Cart
+    <i class="fa-solid fa-cart-arrow-down"></i>
+    </butt>
+
+
+  </div>
+ </nav>
+
+ <div class="section">
+  <div class="container" id="main-container">
+
+
+
+
+   <div class="card m-1 d-none" style="width: 18rem;">
+    <img src="https://picsum.photos/300/200" alt="${title}">
+    <div class="card-body">
+     <p class="card-title bold marg-bottom mt-1 text-4 is-dark">qweqweqweqweq wewqeqwqweqeqweeqwe</p>
+     <p class="text-3 bold  pt-5 pb-5 marg-bottom">samsumg</p>
+     <p class="description text-4 p-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione eum dolor
+      atque beatae, voluptatibus assumenda? Reprehenderit delectus nam dolor? Esse voluptatem tenetur, mollitia
+      distinctio earum porro vitae laborum facilis iure.</p>
+     <p class=" text-3 marg-bottom bold is-success"><span class="bold">Discount: </span>212%</p>
+     <p class="text-4 is-success marg-bottom bold"><span class="bold">Price: </span>1234</p>
+
+     <button class="btn is-white text-4 marg-bottom is-fullwidth has-bg-success" onclick='getProductDetail(id)'>Add
+      to
+      cart</button>
+
+     <a href="index.html"><button class="btn  text-4 has-bg-light-grey is-fullwidth"
+       onclick='getProductDetail(id)'>Back</button></a>
+
+    </div>
+   </div>
+
+   <table>
+    <thead>
+
+     <th>Item</th>
+     <th>Description</th>
+     <th>Quantity</th>
+     <th>Price</th>
+     <th>Total</th>
+    </thead>
+    <tbody id="main-tbody">
+     <td></td>
+     <td></td>
+     <td></td>
+     <td></td>
+     <td></td>
+    </tbody>
+
+
+   </table>
+
+
+
+  </div>
+ </div>
+
+
+ <script>
+  /* ////////////////////////////////// */
+  /* SET GLOBAL VARIABLES */
+  /* ////////////////////////////////// */
+  const queryId = (id) => document.getElementById(id)
+
+  /* ////////////////////////////////// */
+  /* GET DATA */
+  /* ////////////////////////////////// */
+  const URL_BASE = 'https://dummyjson.com/products/'
+
+  const fetchData = async () => {
+   const response = await fetch(`${URL_BASE}`)
+   const products = await response.json()
+   return products
+  }
+
+  fetchData()
+   .then((res) => {
+    createCards(res.products)
+   }
+   )
+
+  /* ////////////////////////////////// */
+  /* CREATE ALL CARDS FROM FETCHDATA */
+  /* ////////////////////////////////// */
+  const createCards = (products) => {
+   queryId('main-container').innerHTML = ''
+
+   for (const { id, title, thumbnail, brand, category, description, discountPercentage, price } of products) {
+    queryId('main-container').innerHTML += `
+   <div class="card m-1" style="width: 18rem;">
+    <img src="${thumbnail}" alt="${title}">
+    <div class="card-body">
+     <p class="card-title bold mt-1 text-4 is-dark">${title}</p>
+     <p class="text-3 bold  pt-1 pb-1">${brand}</p>
+     <p class="description marg-bottom text-4">${description}</p>
+     <p class=" text-3 marg-bottom bold is-success"><span class="bold">Discount: </span>${discountPercentage}%</p>
+     <p class="text-4  bold marg-bottom"><span class="bold ">Price: </span>$${price}</p>
+     <button class="btn is-dark text-4 bg-clr-navbar" onclick='getProductDetail(${id})'>Product Detail</button>
+    </div>
+   </div>
+    `
+   }
+  }
+
+  /* ////////////////////////////////// */
+  /* CREATE CARDS FROM ID */
+  /* ////////////////////////////////// */
+  const getProductDetail = (id) => {
+   fetch(`${URL_BASE}${id}`)
+    .then((res) => res.json())
+    .then((data) => {
+     createDetailCard(data)
+    }
+    )
+    .catch((err) => console.log(err))
+  }
+
+  // getProductDetail()
+
+  const createDetailCard = (product) => {
+   queryId('main-container').innerHTML = ''
+
+   const { id, title, thumbnail, brand, category, description, discountPercentage, price } = product
+   queryId('main-container').innerHTML += `
+   <div class="card m-1" style="width: 18rem;">
+    <img class='img-open' src="${thumbnail}" alt="${title}">
+    <div class="card-body">
+     <p class="card-title-open bold marg-bottom mt-1 text-4 is-dark">${title}</p>
+     <p class="text-3 bold  pt-1 marg-bottom">${brand}</p>
+     <p class="description-open text-4 marg-bottom">${description}</p>
+     <p class=" text-3 marg-bottom bold is-success"><span class="bold">Discount: </span>${discountPercentage}%</p>
+     <p class="text-4  marg-bottom bold"><span class="bold">Price: </span>$${price}</p>
+
+     <button class="btn is-white text-4 marg-bottom is-fullwidth has-bg-success" onclick='addToCart(${id})'>Add to cart</button>
+
+     <a href="index.html"><button class="btn  text-4 bg-clr-navbar is-fullwidth">Back</button></a>
+
+     `
+  }
+
+  /* ////////////////////////////////// */
+  /* CART FUNCTIONS */
+  /* ////////////////////////////////// */
+  let cart = JSON.parse(localStorage.getItem('cart'))
+  if (cart === null) {
+   cart = []
+   localStorage.setItem('cart', JSON.stringify(cart))
+  } else {
+   console.log(cart)
+  }
+
+  const addToCart = (id) => {
+   fetch(`${URL_BASE}${id}`)
+    .then((res) => res.json())
+    .then(product => {
+     /* find product in cart */
+     const isInCart = cart.find(product => product.id === id)
+     if (!isInCart) {
+      /* if isnt in cart, request it and push it to cart */
+      cart.push({ ...product, quantity: 1 })
+      /* save in localstorage */
+      localStorage.setItem('cart', JSON.stringify(cart))
+     } else {
+      // const productInCart = cart.find(product => product.id === id)
+      // /* set new quantity to product */
+      // /* map to set new quantity to product
+      // and return the others without changes */
+      // const newCart = cart.map(product => {
+      //  if (product.id === id) {
+      //   product.quantity = product.quantity + 1
+      //   return product
+      //  } else {
+      //   return product
+      //  }
+      // })
+      // localStorage.setItem('cart', JSON.stringify(newCart))
+     }
+    })
+  }
+
+  /* ////////////////////////////////// */
+  /* SHOPPING CART & PAGE FUNCTIONS */
+  /* ////////////////////////////////// */
+  const renderCart = () => {
+   queryId('main-container').innerHTML = ''
+
+   let rowHeight = 1
+   let totalPrice = 0
+
+   queryId('main-container').innerHTML = `
+   <table>
+    <thead>
+     <th>Item</th>
+     <th>Brand</th>
+     <th>Description</th>
+     <th>Quantity</th>
+     <th>Price</th>
+     <th id='rowspan'>Total</th>
+    </thead>
+    <tbody id="main-tbody">
+     <td></td>
+     <td></td>
+     <td></td>
+     <td></td>
+     <td></td>
+    </tbody>
+   </table>
+   `
+   for (const { thumbnail, id, brand, title, quantity, price } of cart) {
+    rowHeight++
+    totalPrice += price
+
+    queryId('main-tbody').innerHTML +=
+     `
+     <td><img src='${thumbnail}'></td>
+     <td>${brand}</td>
+     <td>${title}</td>
+     <td>${quantity}</td>
+     <td>${price}</td>
+     <td id='${rowHeight}'></td>
+    `
+   }
+
+   queryId('2').setAttribute('rowspan', rowHeight-1)
+   queryId('2').textContent = totalPrice
+
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ </script>
+
+</body>
+
+</html>

@@ -1,0 +1,143 @@
+/* //////////////////////////////////// */
+/* FONT SIZES PADDINGS MARGINS */
+/* //////////////////////////////////// */
+/* FONT SIZES */
+$font-sizes: 1,
+2,
+3,
+4,
+5,
+6;
+
+@each $elemento in $font-sizes {
+  .text-#{$elemento} {
+    font-size: #{$elemento * 0.3}rem;
+  }
+}
+
+/* PADDINGS */
+$paddings: 1,
+2,
+3,
+4,
+5,
+6;
+
+@each $elemento in $paddings {
+  .p-#{$elemento} {
+    padding: #{$elemento * 0.5}rem;
+  }
+}
+
+@each $elemento in $paddings {
+  .pt-#{$elemento} {
+    padding-top: #{$elemento * 0.5}rem;
+  }
+}
+
+@each $elemento in $paddings {
+  .pb-#{$elemento} {
+    padding-bottom: #{$elemento * 0.5}rem;
+  }
+}
+@each $elemento in $paddings {
+  .pl-#{$elemento} {
+    padding-left: #{$elemento * 0.5}rem;
+  }
+}
+@each $elemento in $paddings {
+  .pr-#{$elemento} {
+    padding-right: #{$elemento * 0.5}rem;
+  }
+}
+/* MARGINS */
+$margins: 1,
+2,
+3,
+4,
+5,
+6;
+
+@each $elemento in $margins {
+  .m-#{$elemento} {
+    margin: #{$elemento * 0.5}rem;
+  }
+}
+
+@each $elemento in $margins {
+  .mt-#{$elemento} {
+    margin-top: #{$elemento * 0.5}rem;
+  }
+}
+
+@each $elemento in $margins {
+  .mb-#{$elemento} {
+    margin-bottom: #{$elemento * 0.5};
+  }
+}
+
+@each $elemento in $margins {
+  .ml-#{$elemento} {
+    margin-left: #{$elemento * 0.5};
+  }
+}
+
+@each $elemento in $margins {
+  .mr-#{$elemento} {
+    margin-right: #{$elemento * 0.5};
+  }
+}
+
+/* DEFINE VARIABLE COLORS */
+$success: #3b9e64;
+$danger: #EC7063;
+$warning: #F7DC6F;
+$info:#5360d6;
+$grey: #99A3A4;
+$dark: #2C3E50;
+$violet: #A569BD;
+$light-violet: #D2B4DE;
+$light-grey: #D7DBDD;
+$white: #F7F9F9;
+$light-cian: #32f0d6;
+
+
+/* FONT COLORS */
+$color:(success:$success,
+  danger: $danger,
+  warning:$warning,
+  info:$info,
+  grey: $grey,
+  dark: $dark,
+  violet: $violet,
+  light-violet:$light-violet,
+  light-grey:$light-grey,
+  white: $white,
+  light-cian:$light-cian);
+
+@each $name,
+$hex in $color {
+  .is-#{$name} {
+    color: $hex
+  }
+}
+
+/* BACKGROUND COLORS */
+$bg-color:(success:$success,
+  danger: $danger,
+  warning:$warning,
+  info:$info,
+  grey: $grey,
+  dark: $dark,
+  violet: $violet,
+  light-violet:$light-violet,
+  light-grey:$light-grey,
+  white: $white,
+  light-cian:$light-cian);
+
+@each $name,
+$hex in $bg-color {
+  .has-bg-#{$name} {
+    background-color: #{$hex};
+  }
+}
